@@ -1,0 +1,6 @@
+pg_host=192.168.0.3
+pg_port=5432
+pg_user=musicbrainz
+pg_passwd=musicbrainz
+pg_database=musicbrainz_db
+search-servers={{range (service "search-server")}}{{print .Address ","}}{{end}}

@@ -1,0 +1,41 @@
+version: "2"
+services:
+
+  indexer:
+    build:
+      context: search-indexer
+    volumes:
+      - ./data:/home/search/data
+    ports:
+      - "62000:873"
+    restart: unless-stopped
+    hostname: indexer
+    environment:
+      POSTGRES_HOST: 192.168.0.3
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: musicbrainz_db
+      POSTGRES_USER: abc
+      POSTGRES_PASSWD: abc
+      SEARCH_SERVER_CHILL_TIME_BETWEEN_RUNS: 900
+
+  server:
+    build: 
+      context: search-server
+    ports:
+      - "62001:8080"
+    restart: unless-stopped
+    hostname: server
+
+  consul:
+    command: -server -bootstrap
+    image: progrium/consul
+    ports:
+      - "8500:8500"
+
+  registrator:
+    command: -internal consul://consul:8500
+    image: gliderlabs/registrator
+    links:
+      - consul
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock
