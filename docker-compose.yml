@@ -6,8 +6,6 @@ services:
       context: search-indexer
     volumes:
       - ./data:/home/search/data
-    ports:
-      - "62000:873"
     restart: unless-stopped
     hostname: indexer
     environment:
@@ -29,8 +27,6 @@ services:
   consul:
     command: -server -bootstrap
     image: progrium/consul
-    ports:
-      - "8500:8500"
 
   registrator:
     command: -internal consul://consul:8500

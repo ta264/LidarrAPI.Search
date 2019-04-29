@@ -28,4 +28,5 @@ RUN install_consul_template.sh && \
 # Install the war file
 RUN curl -o /home/search/index.jar ftp://data.musicbrainz.org/pub/musicbrainz/search/index/index.jar
 
+EXPOSE 873
 ENTRYPOINT ["/usr/local/bin/runsvinit"]
