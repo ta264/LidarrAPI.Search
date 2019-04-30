@@ -18,7 +18,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         runit
 
 COPY root /
-RUN ln -sf /etc/sv/indexer /etc/service/
+RUN ln -sf /etc/sv/indexer /etc/service/ && \
+        chmod 600 /etc/rsync.secrets
 
 # Install consul
 RUN install_consul_template.sh && \
